@@ -1,0 +1,51 @@
+.vs/TilemapSDL_Programming/FileContentIndex/db63b702-809f-4cc9-8901-82d8139281e2.vsidx
+
+# ================================
+# Visual Studio IDE
+# ================================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ================================
+# Build output (절대 Git에 넣지 않음)
+# ================================
+Debug/
+Release/
+x64/
+x86/
+out/
+bin/
+build/
+Binaries/
+Intermediate/
+
+# ================================
+# Compiler artifacts
+# ================================
+*.obj
+*.o
+*.lo
+*.gch
+*.pch
+*.pdb
+*.idb
+*.ilk
+*.ipch
+*.tlog
+*.log
+*.tmp
+*.cache
+*.ilk
+*.iobj
+*.ipdb
+
+# ================================
+# SDL
+# ================================
+*.exe
+*.dll
+*.lib
+*.exp
