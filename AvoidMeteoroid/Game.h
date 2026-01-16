@@ -21,58 +21,63 @@ using namespace std;
 class Game {
 public:
 	Game() {};
-	bool Initialize(); // ÃÊ±âÈ­
-	void RunLoop(); // °ÔÀÓ ·çÇÁ
-	void Shutdown(); // °ÔÀÓ Á¾·á
+	bool Initialize(); // ï¿½Ê±ï¿½È­
+	void RunLoop(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	void Shutdown(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	void AddActor(class Actor* actor); // ¾×ÅÍ Ãß°¡
-	void RemoveActor(class Actor* actor); // ¾×ÅÍ Á¦°Å
+	void AddActor(class Actor* actor); // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+	void RemoveActor(class Actor* actor); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	void AddSprite(class SpriteComponent* component); // ½ºÇÁ¶óÀÌÆ® Ãß°¡
-	void RemoveSprite(class SpriteComponent* component); // ½ºÇÁ¶óÀÌÆ® Á¦°Å
-	void ReorderSprite(class SpriteComponent* component); // ½ºÇÁ¶óÀÌÆ® ÀçÁ¤·Ä
+	void AddSprite(class SpriteComponent* component); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
+	void RemoveSprite(class SpriteComponent* component); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+	void ReorderSprite(class SpriteComponent* component); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void AddCollider(class CollisionComponent* component);
 	void RemoveCollider(class CollisionComponent* component);
 
 	void AddText(class TextComponent* text);
 	void RemoveText(class TextComponent* text);
 
-	void CheckCollision(); // Ãæµ¹ Ã³¸®
+	void CheckCollision(); // ï¿½æµ¹ Ã³ï¿½ï¿½
 
-	class TTF_Font* GetFont() const { return mFont; } // Æ÷Æ® ¸®ÅÏ
+	class TTF_Font* GetFont() const { return mFont; } // ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
-	SDL_Renderer* GetRenderer()const { return mRenderer; } // ·£´õ·¯ ¸®ÅÏ
-	SDL_Texture* GetTexture(const string& fileName); // ÅØ½ºÃ³ ¸®ÅÏ
+	SDL_Renderer* GetRenderer()const { return mRenderer; } // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	SDL_Texture* GetTexture(const string& fileName); // ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½
+
+	void AddAsteroid(class Asteroid* ast);
+	void RemoveAstroid(class Asteroid* ast);
+	std::vector<class Asteroid*>& GetAsteroids() { return mAsteroids; }
+
 private:
-	void ProcessInput(); // ÀÔ·Â Ã³¸®
-	void UpdateGame(); // °ÔÀÓ ¾÷µ¥ÀÌÆ®
-	void GenerateOutput(); // °ÔÀÓ °»½Å
+	void ProcessInput(); // ï¿½Ô·ï¿½ Ã³ï¿½ï¿½
+	void UpdateGame(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	void GenerateOutput(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	void LoadData(); // µ¥ÀÌÅÍ ·Îµå
-	void UnLoadData();// µ¥ÀÌÅÍ ¾ð·Îµå
+	void LoadData(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
+	void UnLoadData();// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Îµï¿½
 
 
 	SDL_Window* mWindow; // Ã¢
-	SDL_Renderer* mRenderer; // ·£´õ·¯
+	SDL_Renderer* mRenderer; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	TTF_Font* mFont; // ÆùÆ®
+	TTF_Font* mFont; // ï¿½ï¿½Æ®
 
-	unordered_map<string, SDL_Texture*> mTextures; //ÅØ½ºÃ³ ÁýÇÕÃ¼
-	// ÇüÅÂ
-	vector<class Actor*> mActors; // ¾×ÅÍ ÁýÇÕÃ¼
-	vector<class Actor*> mPendingActors; // ÀÓÀÇ ¾×ÅÍ ÁýÇÕÃ¼
+	unordered_map<string, SDL_Texture*> mTextures; //ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½Ã¼
+	// ï¿½ï¿½ï¿½ï¿½
+	vector<class Actor*> mActors; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
+	vector<class Actor*> mPendingActors; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
 
-	// °»½Å ¹× ·ÎÁ÷
-	vector<class SpriteComponent*> mSprites; // ½ºÇÁ¶óÀÌÆ® ÁýÇÕÃ¼
-	vector<class CollisionComponent*> mColliders; // Ãæµ¹ ÄÄÆ÷³ÍÆ® ÁýÇÕÃ¼
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	vector<class SpriteComponent*> mSprites; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Ã¼
+	vector<class CollisionComponent*> mColliders; // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Ã¼
 	vector<class TextComponent*> mTexts;
 
-	Uint32 mTicksCount; // Æ½ Ä«¿îÅÍ
-	bool mIsRunning; // ·çÇÁ °¡´É À¯¹«
-	bool mUpdateActors; // ¾×ÅÍ ¾÷µ¥ÀÌÆ® °¡´É À¯¹«
+	Uint32 mTicksCount; // Æ½ Ä«ï¿½ï¿½ï¿½ï¿½
+	bool mIsRunning; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	bool mUpdateActors; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	vector<class Ground*> mGrounds; // ¶¥ ¾×ÅÍ ÁýÇÕÃ¼
-	class Player* mPlayer; // ÇÃ·¹ÀÌ ¾×ÅÍ
+	vector<class Ground*> mGrounds; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
+	std::vector<class Asteroid*> mAsteroids;
 };
 
 #endif // !Game_H
