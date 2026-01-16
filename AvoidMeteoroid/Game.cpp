@@ -11,22 +11,23 @@
 #include "CollisionComponent.h"
 #include "Asteroid.h"
 #include <algorithm>
+#include"Ship.h"
 using namespace std;
 
-//ï¿½Ê±ï¿½È­
+//ÃÊ±âÈ­
 bool Game::Initialize() {
-	// SDL ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// SDL ÃÊ±âÈ­ ¹× »ý¼º
 	int sdlResult = SDL_Init(SDL_INIT_VIDEO);
 	if (sdlResult != 0) { SDL_Log("Unable to initialize SL : %s", SDL_GetError()); }
 
-	//Ã¢ ï¿½ï¿½ï¿½ï¿½
+	//Ã¢ »ý¼º
 	mWindow = SDL_CreateWindow("Game Programming in C++", 100, 100, screen_width, screen_height, 0);
 	if (!mWindow) {
 		SDL_Log("Failed to create window : %s ", SDL_GetError());
 		return false;
 	}
 
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//·£´õ·¯ »ý¼º
 	mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!mRenderer) {
 		SDL_Log("Failed to create Renderer : %s", SDL_GetError());
@@ -34,29 +35,29 @@ bool Game::Initialize() {
 	}
 	mIsRunning = true;
 
-	//ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+	//ÀÌ¹ÌÁö ÃÊ±âÈ­
 	int flag = IMG_INIT_PNG;
 	int imageResult = IMG_Init(IMG_INIT_PNG);
 	if ((imageResult & flag) != flag) { SDL_Log("Failed to initalize PNG : %s", SDL_GetError()); }
 
-	//ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ttf ï¿½Ê±ï¿½È­
+	//ÅØ½ºÆ®¿ë ttf ÃÊ±âÈ­
 	if (TTF_Init() == -1) {
 		SDL_Log("TTF_Init : %s", TTF_GetError());
 		return false;
 	}
 
-	//ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+	//ÅØ½ºÆ® ¿ÀÇÂ
 	mFont = TTF_OpenFont("Font/OpenSans-Regular.ttf", 20);
 	if (!mFont) {
 		SDL_Log("Failed to load Font : %s", TTF_GetError());
 		return false;
 	}
-	// ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Ã³ ï¿½Îµï¿½
+	// »ç¿ë ÅØ½ºÃ³ ·Îµå
 	LoadData();
 	return true;
 }
 
-//ï¿½ï¿½ï¿½ï¿½
+//·çÇÁ
 void Game::RunLoop() {
 	while (mIsRunning) {
 		ProcessInput();
@@ -64,17 +65,17 @@ void Game::RunLoop() {
 		GenerateOutput();
 	}
 }
-//ï¿½ï¿½ï¿½ï¿½
+//Á¾·á
 void Game::Shutdown() {
-	TTF_CloseFont(mFont); // ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
-	TTF_Quit(); // TTF ï¿½Ò¸ï¿½
-	SDL_DestroyRenderer(mRenderer);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½
-	SDL_DestroyWindow(mWindow);// Ã¢ ï¿½Ò¸ï¿½
-	IMG_Quit(); // ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½
-	SDL_Quit(); // SDL ï¿½Ò¸ï¿½
+	TTF_CloseFont(mFont); // ÆùÆ® Á¦°Å
+	TTF_Quit(); // TTF ¼Ò¸ê
+	SDL_DestroyRenderer(mRenderer);// ·£´õ·¯ ¼Ò¸ê
+	SDL_DestroyWindow(mWindow);// Ã¢ ¼Ò¸ê
+	IMG_Quit(); // ÀÌ¹ÌÁö ¼Ò¸ê
+	SDL_Quit(); // SDL ¼Ò¸ê
 }
 
-//ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+//¾×ÅÍ Ãß°¡
 void Game::AddActor(Actor* actor) {
 	if (mUpdateActors) {
 		mPendingActors.emplace_back(actor);
@@ -96,7 +97,7 @@ void Game::RemoveActor(Actor* actor) {
 	}
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
+//½ºÇÁ¶óÀÌÆ® Ãß°¡
 void Game::AddSprite(SpriteComponent* sprite) {
 	int myDrawOrder = sprite->GetDrawOrder();
 	auto iter = mSprites.begin();
@@ -107,7 +108,7 @@ void Game::AddSprite(SpriteComponent* sprite) {
 	mSprites.insert(iter, sprite);
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+//½ºÇÁ¶óÀÌÆ® Á¦°Å
 void Game::RemoveSprite(SpriteComponent* sprite) {
 	auto iter = find(mSprites.begin(), mSprites.end(), sprite);
 	if (iter != mSprites.end()) {
@@ -122,12 +123,12 @@ void Game::ReorderSprite(SpriteComponent* sprite) {
 		});
 }
 
-//ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
+//Ãæµ¹ ÄÄÆ÷³ÍÆ® Ãß°¡
 void Game::AddCollider(CollisionComponent* collider) {
 	mColliders.emplace_back(collider);
 }
 
-//ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+//Ãæµ¹ ÄÄÆ÷³ÍÆ® Á¦°Å
 void Game::RemoveCollider(CollisionComponent* collider) {
 	auto iter = find(mColliders.begin(), mColliders.end(), collider);
 	if (iter != mColliders.end()) {
@@ -135,12 +136,12 @@ void Game::RemoveCollider(CollisionComponent* collider) {
 	}
 }
 
-//ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+//ÅØ½ºÆ® »ðÀÔ
 void Game::AddText(TextComponent* text) {
 	mTexts.emplace_back(text);
 }
 
-//ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+//ÅØ½ºÆ® Á¦°Å
 void Game::RemoveText(TextComponent* text) {
 	auto iter = find(mTexts.begin(), mTexts.end(), text);
 	if (iter != mTexts.end()) {
@@ -161,7 +162,7 @@ void Game::CheckCollision() {
 	}
 }
 
-//ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½
+//ÅØ½ºÃ³ ¸®ÅÏ
 SDL_Texture* Game::GetTexture(const string& fileName) {
 	SDL_Texture* tex = nullptr;
 	auto iter = mTextures.find(fileName);
@@ -185,7 +186,7 @@ SDL_Texture* Game::GetTexture(const string& fileName) {
 	return tex;
 }
 
-//ï¿½Ô·ï¿½Ã³ï¿½ï¿½
+//ÀÔ·ÂÃ³¸®
 void Game::ProcessInput() {
 
 	SDL_Event event;
@@ -197,15 +198,20 @@ void Game::ProcessInput() {
 		}
 	}
 
-	const Uint8* state = SDL_GetKeyboardState(NULL); // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const Uint8* state = SDL_GetKeyboardState(NULL); // ÀÔ·Â °¡Á®¿À±â
 	if (state[SDL_SCANCODE_ESCAPE]) {
 		mIsRunning = false;
 	}
+	mUpdateActors = true;
+	for (auto actor : mActors) {
+		actor->ProcessInput(state);
+	}
+	mUpdateActors = false;
 }
 
-//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+//°ÔÀÓ ¾÷µ¥ÀÌÆ®
 void Game::UpdateGame() {
-	//FPS ï¿½ï¿½ï¿½ï¿½
+	//FPS Á¦ÇÑ
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
@@ -214,14 +220,14 @@ void Game::UpdateGame() {
 
 	mTicksCount = SDL_GetTicks();
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	//¾×ÅÍ ¾÷µ¥ÀÌÆ®
 	mUpdateActors = true;
 	for (auto actor : mActors) {
 		actor->Update(deltaTime);
 	}
 	mUpdateActors = false;
 
-	//ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í·ï¿½
+	//ÆÐµù¿¡¼­ ¾×ÅÍ·Î
 	for (auto pending : mPendingActors) {
 		mActors.emplace_back(pending);
 	}
@@ -229,7 +235,7 @@ void Game::UpdateGame() {
 
 	CheckCollision();
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	//¾×ÅÍ Á×À½ È®ÀÎ
 	vector<Actor*> deadActor;
 	for (auto actor : mActors) {
 		if (actor->GetState() == Actor::EDead) {
@@ -237,17 +243,17 @@ void Game::UpdateGame() {
 		}
 	}
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+	//Á×Àº ¾×ÅÍ Ã³¸®
 	for (auto actor : deadActor) {
 		delete actor;
 	}
 
 }
 
-//ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+//°»½Å Ã³¸®
 void Game::GenerateOutput() {
-	SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	SDL_RenderClear(mRenderer); // ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
+	SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255); // »ç¿ëÇÒ »ö °áÁ¤
+	SDL_RenderClear(mRenderer); // ±×¸± ¹öÆÛ Å¬¸®¾î
 
 	for (auto sprite : mSprites) {
 		sprite->Draw(mRenderer);
@@ -257,15 +263,15 @@ void Game::GenerateOutput() {
 		text->Draw(mRenderer);
 	}
 
-	SDL_RenderPresent(mRenderer); // ï¿½×¸ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û·ï¿½ ï¿½ï¿½ï¿½ï¿½
+	SDL_RenderPresent(mRenderer); // ±×¸° ¹öÆÛ¸¦ ÇöÀç ¹öÆÛ·Î º¯°æ
 }
 
-//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
+//»ç¿ë µ¥ÀÌÅÍ ·Îµå
 void Game::LoadData() {
 
-	Actor* temp = new Actor(this);
-	temp->SetPosition(Vector2(512.f, 384.0f));
-	BGSpriteComponent* bg = new BGSpriteComponent(temp);
+	mShip = new Ship(this);
+	mShip->SetPosition(Vector2(512.f, 384.f));
+	mShip->SetRotation(Math::PiOver2);
 
 	for (int i = 0; i < 20; i++) {
 		new Asteroid(this);
