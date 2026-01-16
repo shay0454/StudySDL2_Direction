@@ -11,6 +11,6 @@ class Ship : public  Actor {
 
 	private:
 		float mLaserCooldown;
-
+		class CircleComponent* mCircle;
 };
 #endif // !SHIP_H

@@ -3,6 +3,7 @@
 #include"SpriteComponent.h"
 #include"InputComponent.h"
 #include"TextComponent.h"
+#include"CircleComponent.h"
 #include"Math.h"
 #include"Laser.h"
 #include"Asteroid.h"
@@ -18,12 +19,20 @@ Ship::Ship(Game* game):Actor(game) {
 	ic->SetMaxForwardSpeed(300.f);
 	ic->SetMaxAngularSpeed(Math::TwoPi);
 
+	mCircle = new CircleComponent(this);
+	mCircle->SetRadius(32.0f);
 
 }
 
 void Ship::UpdateActor(float deltaTime) {
 	mLaserCooldown -= deltaTime;
 
+	for (auto ast : GetGame()->GetAsteroids()) {
+		if (Intersect(*mCircle, *(ast->GetCircle()))){
+			SetState(EDead);
+			break;
+		}
+	}
 }
 
 void Ship::ActorInput(const uint8_t* keyState) {

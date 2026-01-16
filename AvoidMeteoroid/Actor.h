@@ -13,21 +13,21 @@ public:
 	};
 	Actor(class Game* game);
 	virtual ~Actor();
-	void Update(float deltaTime);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
-	void UpdateComponents(float deltaTime);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
-	virtual void UpdateActor(float deltaTime);//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	void Update(float deltaTime);// ¾÷µ¥ÀÌÆ®
+	void UpdateComponents(float deltaTime);//ÄÄÆ÷³ÍÆ® ¾÷µ¥ÀÌÆ®
+	virtual void UpdateActor(float deltaTime);//¾×ÅÍ ¾÷µ¥ÀÌÆ®
 
-	void AddComponent(class Component* component);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½
-	void RemoveComponent(class Component* component);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+	void AddComponent(class Component* component);//ÄÄÆ÷³ÍÆ® Ãß°¡
+	void RemoveComponent(class Component* component);//ÄÄÆ÷³ÍÆ® Á¦°Å
 
-	void virtual OnCollision(Actor* other) {};//ï¿½æµ¹ï¿½ï¿½
+	void virtual OnCollision(Actor* other) {};//Ãæµ¹½Ã
 
 	void ProcessInput(const uint8_t* keyState);
 	void virtual ActorInput(const uint8_t* keyState) {}
 
 
 	void SetPosition(Vector2 position) { mPosition = position; }
-	Vector2 GetPosition() const { return mPosition; }
+	const Vector2& GetPosition() const { return mPosition; }
 
 	void SetState(State state) { mState = state; }
 	State GetState() const { return mState; }
