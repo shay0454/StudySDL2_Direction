@@ -13,6 +13,7 @@ public:
 	virtual ~Component();
 	virtual void Update(float deltaTime);//업데이트
 	virtual void Draw(SDL_Renderer* renderer);//Draw
+	virtual void ProcessInput(const uint8_t* keyState) {}
 	int GetUpdateOrder() const { return mUpdateOrder; }
 protected:
 	class Actor* mOwner;

@@ -53,3 +53,12 @@ void Actor::RemoveComponent(Component* component) {
 Vector2 Actor::GetForward() const {
 	return Vector2(Math::Cos(mRotation), Math::Sin(mRotation));
 }
+
+void Actor::ProcessInput(const uint8_t* keyState) {
+	if (mState == EActive) {
+		for (auto comp : mComponents) {
+			comp->ProcessInput(keyState);
+		}
+		ActorInput(keyState);
+	}
+}
