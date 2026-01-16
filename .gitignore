@@ -103,6 +103,7 @@ AvoidMeteoroid/Assets/Farback01.png
 
 AvoidMeteoroid/Assets/Farback02.png
 
+<<<<<<< Updated upstream
 AvoidMeteoroid/Assets/LICENSE.txt
 
 AvoidMeteoroid/Assets/MapLayer1.csv
@@ -111,6 +112,8 @@ AvoidMeteoroid/Assets/MapLayer2.csv
 
 AvoidMeteoroid/Assets/MapLayer3.csv
 
+=======
+>>>>>>> Stashed changes
 AvoidMeteoroid/Assets/Ship01.png
 
 AvoidMeteoroid/Assets/Ship02.png
@@ -119,6 +122,17 @@ AvoidMeteoroid/Assets/Ship03.png
 
 AvoidMeteoroid/Assets/Ship04.png
 
+<<<<<<< Updated upstream
+=======
+AvoidMeteoroid/Assets/LICENSE.txt
+
+AvoidMeteoroid/Assets/MapLayer1.csv
+
+AvoidMeteoroid/Assets/MapLayer2.csv
+
+AvoidMeteoroid/Assets/MapLayer3.csv
+
+>>>>>>> Stashed changes
 AvoidMeteoroid/Assets/Stars.png
 
 AvoidMeteoroid/Assets/Tiles.png
