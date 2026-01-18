@@ -5,6 +5,7 @@
 #include"CircleComponent.h"
 #include"Asteroid.h"
 #include"TextComponent.h"
+#include"AsteroidGame.h"
 
 Laser::Laser(Game* game):Actor(game),mDeathTimer(1.0f) {
 	SpriteComponent* sc = new SpriteComponent(this);
@@ -26,7 +27,8 @@ void Laser::UpdateActor(float deltaTime) {
 		SetState(EDead);
 	}
 	else {
-		for (auto ast : GetGame()->GetAsteroids()) {
+		auto myGame = dynamic_cast<AsteroidGame*>(GetGame());
+ 		for (auto ast : myGame->GetAsteroids()) {
 			if (Intersect(*mCircle, *(ast->GetCircle()))) {
 				SetState(EDead);
 				ast->SetState(EDead);

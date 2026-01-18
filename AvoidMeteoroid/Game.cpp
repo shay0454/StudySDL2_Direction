@@ -81,6 +81,8 @@ void Game::AddActor(Actor* actor) {
 		mPendingActors.emplace_back(actor);
 	}
 	else { mActors.emplace_back(actor); }
+
+	OnActorCreated(actor); // game.h 상속 game 내에서 추가
 }
 
 void Game::RemoveActor(Actor* actor) {
@@ -95,6 +97,8 @@ void Game::RemoveActor(Actor* actor) {
 		iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
 	}
+
+	OnActorDestroyed(actor); // game.h 상속 game 내에서 제거
 }
 
 //스프라이트 추가
@@ -245,6 +249,7 @@ void Game::UpdateGame() {
 
 	//죽은 액터 처리
 	for (auto actor : deadActor) {
+		RemoveActor(actor);
 		delete actor;
 	}
 
@@ -266,17 +271,6 @@ void Game::GenerateOutput() {
 	SDL_RenderPresent(mRenderer); // 그린 버퍼를 현재 버퍼로 변경
 }
 
-//사용 데이터 로드
-void Game::LoadData() {
-
-	mShip = new Ship(this);
-	mShip->SetPosition(Vector2(512.f, 384.f));
-	mShip->SetRotation(Math::PiOver2);
-
-	for (int i = 0; i < 20; i++) {
-		new Asteroid(this);
-	}
-}
 
 void Game::UnLoadData() {
 	while (!mActors.empty()) {
@@ -289,13 +283,3 @@ void Game::UnLoadData() {
 	mTextures.clear();
 }
 
-void Game::AddAsteroid(Asteroid* ast) {
-	mAsteroids.emplace_back(ast);
-}
-
-void Game::RemoveAstroid(Asteroid* ast) {
-	auto iter = std::find(mAsteroids.begin(), mAsteroids.end(), ast);
-	if (iter != mAsteroids.end()) {
-		mAsteroids.erase(iter);
-	}
-}

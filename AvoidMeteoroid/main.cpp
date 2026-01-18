@@ -1,9 +1,9 @@
 #include<iostream>
 #include<SDL.h>
 #include"Game.h"
-
+#include"AsteroidGame.h"
 int main(int argc, char** argv) {
-	Game game;
+	AsteroidGame game;
 	bool success = game.Initialize();
 	if (success) {
 		game.RunLoop();

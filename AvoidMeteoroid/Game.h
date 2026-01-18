@@ -20,6 +20,16 @@ using namespace std;
 
 class Game {
 public:
+	template<class T>
+	T* SpawnActor() {
+		T* actor = new T(this);
+		AddActor(actor);
+		return actor;
+	}
+
+	template<class T>
+	T* DestroyActor();
+
 	Game() {};
 	bool Initialize(); // 초기화
 	void RunLoop(); // 게임 루프
@@ -27,6 +37,9 @@ public:
 
 	void AddActor(class Actor* actor); // 액터 추가
 	void RemoveActor(class Actor* actor); // 액터 제거
+
+	virtual void OnActorCreated(Actor*) {} // game.h 기반 game에서만 가진 actor에 추가합니다.
+	virtual void OnActorDestroyed(Actor*) {} // game.h 기반 game에서만 가진 actor를 제거합니다.
 
 	void AddSprite(class SpriteComponent* component); // 스프라이트 추가
 	void RemoveSprite(class SpriteComponent* component); // 스프라이트 제거
@@ -44,18 +57,15 @@ public:
 	SDL_Renderer* GetRenderer()const { return mRenderer; } // 랜더러 리턴
 	SDL_Texture* GetTexture(const string& fileName); // 텍스처 리턴
 
-	void AddAsteroid(class Asteroid* ast);
-	void RemoveAstroid(class Asteroid* ast);
-	std::vector<class Asteroid*>& GetAsteroids() { return mAsteroids; }
+protected:
+	virtual void LoadData() {} // 데이터 로드
+	void UnLoadData();// 데이터 언로드
+
 
 private:
 	void ProcessInput(); // 입력 처리
 	void UpdateGame(); // 게임 업데이트
 	void GenerateOutput(); // 게임 갱신
-
-	void LoadData(); // 데이터 로드
-	void UnLoadData();// 데이터 언로드
-
 
 	SDL_Window* mWindow; // 창
 	SDL_Renderer* mRenderer; // 랜더러
@@ -76,8 +86,7 @@ private:
 	bool mIsRunning; // 루프 가능 유무
 	bool mUpdateActors; // 액터 업데이트 가능 유무
 
-	class Ship* mShip; // 플레이 액터
-	std::vector<class Asteroid*> mAsteroids;
+
 };
 
 #endif // !Game_H

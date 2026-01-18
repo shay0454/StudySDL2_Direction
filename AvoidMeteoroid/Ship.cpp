@@ -4,9 +4,11 @@
 #include"InputComponent.h"
 #include"TextComponent.h"
 #include"CircleComponent.h"
+#include"AsteroidGame.h"
 #include"Math.h"
 #include"Laser.h"
 #include"Asteroid.h"
+#include"AsteroidGame.h"
 Ship::Ship(Game* game):Actor(game) {
 	SpriteComponent* sc = new SpriteComponent(this, 150);
 	sc->SetTexture(game->GetTexture("Assets/Ship.png"));
@@ -27,7 +29,8 @@ Ship::Ship(Game* game):Actor(game) {
 void Ship::UpdateActor(float deltaTime) {
 	mLaserCooldown -= deltaTime;
 
-	for (auto ast : GetGame()->GetAsteroids()) {
+	auto myGame = dynamic_cast<AsteroidGame*>(GetGame());
+	for (auto ast :myGame->GetAsteroids()) {
 		if (Intersect(*mCircle, *(ast->GetCircle()))){
 			SetState(EDead);
 			break;
@@ -38,7 +41,7 @@ void Ship::UpdateActor(float deltaTime) {
 void Ship::ActorInput(const uint8_t* keyState) {
 	if (keyState[SDL_SCANCODE_SPACE] && mLaserCooldown <= 0.0f)
 	{
-		Laser* laser = new Laser(GetGame());
+		Laser* laser = GetGame()->SpawnActor<Laser>();
 		laser->SetPosition(GetPosition());
 		laser->SetRotation(GetRotation());
 	}

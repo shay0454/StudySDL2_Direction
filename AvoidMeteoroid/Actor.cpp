@@ -4,11 +4,9 @@
 #include "Math.h"
 
 Actor::Actor(Game* game) :mState(EActive), mPosition(Vector2(0, 0)), mScale(1.0f), mRotation(0.0f), mGame(game) {
-	mGame->AddActor(this);
 }
 
 Actor::~Actor() {
-	mGame->RemoveActor(this);
 }
 
 //업데이트

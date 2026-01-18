@@ -19,10 +19,7 @@ Asteroid::Asteroid(Game* game):Actor(game),mCircle(nullptr) {
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(40.0f);
-
-	game->AddAsteroid(this);
 }
 
 Asteroid::~Asteroid() {
-	GetGame()->RemoveAstroid(this);
 }
