@@ -130,7 +130,6 @@
     <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="AsteroidGame.h" />
-    <ClInclude Include="AvoidAstroidGame.h" />
     <ClInclude Include="BGSpriteComponent.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="CollisionComponent.h" />

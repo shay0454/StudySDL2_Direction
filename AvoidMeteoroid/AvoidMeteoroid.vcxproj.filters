@@ -63,9 +63,6 @@
     <ClInclude Include="Laser.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="AvoidAstroidGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="AsteroidGame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

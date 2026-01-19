@@ -8,6 +8,9 @@ public:
 	void OnActorDestroyed(Actor* actor) override;
 	void AddAsteroid(class Asteroid* ast);
 	void RemoveAstroid(class Asteroid* ast);
+
+	void UpdateGame()override;
+
 	std::vector<class Asteroid*>& GetAsteroids() { return mAsteroids; }
 
 private:

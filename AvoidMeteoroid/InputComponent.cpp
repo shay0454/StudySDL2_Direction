@@ -4,6 +4,11 @@ InputComponent::InputComponent(Actor* owner):MoveComponent(owner),mForwardKey(0)
 
 void InputComponent::ProcessInput(const uint8_t* keyState) {
 	float forwardSpeed = 0.0f;
+	if (!mActive) {
+		SetForwardSpeed(0);
+		SetAngularSpeed(0);
+		return;
+	}
 	if (keyState[mForwardKey]) {
 		forwardSpeed += mMaxForwardSpeed;
 	}

@@ -60,11 +60,11 @@ public:
 protected:
 	virtual void LoadData() {} // 데이터 로드
 	void UnLoadData();// 데이터 언로드
+	virtual void UpdateGame(); // 게임 업데이트
 
 
 private:
 	void ProcessInput(); // 입력 처리
-	void UpdateGame(); // 게임 업데이트
 	void GenerateOutput(); // 게임 갱신
 
 	SDL_Window* mWindow; // 창

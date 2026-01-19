@@ -13,26 +13,30 @@ Ship::Ship(Game* game):Actor(game) {
 	SpriteComponent* sc = new SpriteComponent(this, 150);
 	sc->SetTexture(game->GetTexture("Assets/Ship.png"));
 
-	InputComponent* ic = new InputComponent(this);
-	ic->SetForwardKey(SDL_SCANCODE_W);
-	ic->SetBackKey(SDL_SCANCODE_S);
-	ic->SetClockwiseKey(SDL_SCANCODE_D);
-	ic->SetCounterClockwiseKey(SDL_SCANCODE_A);
-	ic->SetMaxForwardSpeed(300.f);
-	ic->SetMaxAngularSpeed(Math::TwoPi);
+	mInput = new InputComponent(this);
+	mInput->SetForwardKey(SDL_SCANCODE_W);
+	mInput->SetBackKey(SDL_SCANCODE_S);
+	mInput->SetClockwiseKey(SDL_SCANCODE_D);
+	mInput->SetCounterClockwiseKey(SDL_SCANCODE_A);
+	mInput->SetMaxForwardSpeed(300.f);
+	mInput->SetMaxAngularSpeed(Math::TwoPi);
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(32.0f);
 
+	mText = new TextComponent(this);
 }
 
 void Ship::UpdateActor(float deltaTime) {
+	mText->SetText(to_string( mRespawnTimer));
 	mLaserCooldown -= deltaTime;
-
+	if (IsDead()) { 
+		mRespawnTimer -= deltaTime;
+		return; }
 	auto myGame = dynamic_cast<AsteroidGame*>(GetGame());
 	for (auto ast :myGame->GetAsteroids()) {
 		if (Intersect(*mCircle, *(ast->GetCircle()))){
-			SetState(EDead);
+			Die();
 			break;
 		}
 	}
@@ -46,4 +50,16 @@ void Ship::ActorInput(const uint8_t* keyState) {
 		laser->SetRotation(GetRotation());
 	}
 	//mLaserCooldown = 0.5f;
+}
+
+void Ship::Die() {
+	mDead = true;
+	mInput->SetActive(false);
+	SetRespawnTimer(3.0f);
+}
+
+void Ship::Respawn() {
+	mDead = false;
+	mInput->SetActive(true);
+	SetRespawnTimer(0.0f);
 }

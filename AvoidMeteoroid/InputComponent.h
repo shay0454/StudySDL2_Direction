@@ -23,7 +23,11 @@ class InputComponent : public MoveComponent {
 		void SetClockwiseKey(int key) { mClockwiseKey = key; }
 		void SetCounterClockwiseKey(int key) { mCounterClockwiseKey = key; }
 
+		void SetActive(bool active) { mActive = active; }
+
 	private:
+		bool mActive = true;
+
 		float mMaxForwardSpeed;
 		float mMaxAngularSpeed;
 

@@ -18,10 +18,8 @@ void AsteroidGame::OnActorDestroyed(Actor* actor) {
 		auto iter = find(mAsteroids.begin(), mAsteroids.end(), ast);
 		iter_swap(iter, mAsteroids.end() - 1);
 		mAsteroids.pop_back();
-		;
 	}
 	else if (auto ship = dynamic_cast<Ship*>(actor)) {
-		mShip = nullptr;
 	}
 }
 
@@ -45,5 +43,15 @@ void AsteroidGame::LoadData() {
 
 	for (int i = 0; i < 20; i++) {
 		Game::SpawnActor<Asteroid>();
+	}
+}
+
+void AsteroidGame::UpdateGame(){
+ 	Game::UpdateGame();
+
+	if (mShip->IsDead()) {
+		if (mShip->GetRespawnTimer() <= 0.0f) {
+			mShip->Respawn();
+		}
 	}
 }
