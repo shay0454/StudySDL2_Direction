@@ -31,6 +31,9 @@ class InputComponent : public MoveComponent {
 		float mMaxForwardSpeed;
 		float mMaxAngularSpeed;
 
+		float mCurrentForwardSpeed = 0;
+		float mCurrentAngularSpeend = 0;
+
 		int mForwardKey;
 		int mBackKey;
 

@@ -18,8 +18,8 @@ Ship::Ship(Game* game):Actor(game) {
 	mInput->SetBackKey(SDL_SCANCODE_S);
 	mInput->SetClockwiseKey(SDL_SCANCODE_D);
 	mInput->SetCounterClockwiseKey(SDL_SCANCODE_A);
-	mInput->SetMaxForwardSpeed(300.f);
-	mInput->SetMaxAngularSpeed(Math::TwoPi);
+	mInput->SetMaxForwardSpeed(10.f);
+	mInput->SetMaxAngularSpeed(Math::Pi/6);
 
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(32.0f);
@@ -28,7 +28,7 @@ Ship::Ship(Game* game):Actor(game) {
 }
 
 void Ship::UpdateActor(float deltaTime) {
-	mText->SetText(to_string( mRespawnTimer));
+	mText->SetText(to_string( mInput->GetForwardSpeed()));
 	mLaserCooldown -= deltaTime;
 	if (IsDead()) { 
 		mRespawnTimer -= deltaTime;
@@ -48,8 +48,8 @@ void Ship::ActorInput(const uint8_t* keyState) {
 		Laser* laser = GetGame()->SpawnActor<Laser>();
 		laser->SetPosition(GetPosition());
 		laser->SetRotation(GetRotation());
+		mLaserCooldown = 0.5f;
 	}
-	//mLaserCooldown = 0.5f;
 }
 
 void Ship::Die() {

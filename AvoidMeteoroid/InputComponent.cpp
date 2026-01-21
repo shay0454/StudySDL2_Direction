@@ -3,26 +3,32 @@
 InputComponent::InputComponent(Actor* owner):MoveComponent(owner),mForwardKey(0),mBackKey(0),mClockwiseKey(0),mCounterClockwiseKey(0) {}
 
 void InputComponent::ProcessInput(const uint8_t* keyState) {
-	float forwardSpeed = 0.0f;
 	if (!mActive) {
+		mCurrentForwardSpeed = 0;
+		mCurrentAngularSpeend = 0;
 		SetForwardSpeed(0);
 		SetAngularSpeed(0);
 		return;
 	}
 	if (keyState[mForwardKey]) {
-		forwardSpeed += mMaxForwardSpeed;
+		mCurrentForwardSpeed += mMaxForwardSpeed;
 	}
 	if (keyState[mBackKey]) {
-		forwardSpeed -= mMaxForwardSpeed;
+		mCurrentForwardSpeed -= mMaxForwardSpeed;
 	}
-	SetForwardSpeed(forwardSpeed);
+	if (!(keyState[mForwardKey] || keyState[mBackKey])) {
+		mCurrentForwardSpeed *= 0.9f;
+	}
+	SetForwardSpeed(SDL_clamp(mCurrentForwardSpeed, -600, 600));
 
-	float angularSpeed = 0.0f;
 	if (keyState[mClockwiseKey]) {
-		angularSpeed += mMaxAngularSpeed;
+		mCurrentAngularSpeend += mMaxAngularSpeed;
 	}
 	if (keyState[mCounterClockwiseKey]) {
-		angularSpeed -= mMaxAngularSpeed;
+		mCurrentAngularSpeend -= mMaxAngularSpeed;
 	}
-	SetAngularSpeed(angularSpeed);
+	if (!(keyState[mClockwiseKey] || keyState[mCounterClockwiseKey])) {
+		mCurrentAngularSpeend *= 0.9f;
+	}
+	SetAngularSpeed(SDL_clamp(mCurrentAngularSpeend,-Math::TwoPi,Math::TwoPi));
 }
