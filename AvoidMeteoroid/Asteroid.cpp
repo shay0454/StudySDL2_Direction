@@ -3,9 +3,10 @@
 #include "Random.h"
 #include"SpriteComponent.h"
 #include"MoveComponent.h"
-#include"CircleComponent.h"
+#include"CircleCollisionComponent.h"
+#include"BoxCollisionComponent.h"
 #include"Math.h"
-Asteroid::Asteroid(Game* game):Actor(game),mCircle(nullptr) {
+Asteroid::Asteroid(Game* game):Actor(game){
 	Vector2 randPos = Random::GetVector(Vector2::Zero, Vector2(1024.0f, 768.0f));
 	SetPosition(randPos);
 
@@ -17,8 +18,9 @@ Asteroid::Asteroid(Game* game):Actor(game),mCircle(nullptr) {
 	MoveComponent* mc = new MoveComponent(this);
 	mc->SetForwardSpeed(150.f);
 
-	mCircle = new CircleComponent(this);
-	mCircle->SetRadius(40.0f);
+	CircleCollisionComponent* mCircle = new CircleCollisionComponent(this);
+	mCircle->SetRadius(30.0f);
+	SetCollision(mCircle);
 }
 
 Asteroid::~Asteroid() {
@@ -39,4 +41,11 @@ void Asteroid::UpdateActor(float deltaTime) {
 	pos.x = SDL_clamp(pos.x, 0.0f, screen_width);
 	pos.y = SDL_clamp(pos.y, 0.0f, screen_height);
 	SetPosition(pos);
+}
+
+void Asteroid::OnCollision(Actor* other) {
+	if (GetState() == EDead)return;
+	if (!dynamic_cast<Asteroid*>(other)) {
+		SetState(EDead);
+	}
 }

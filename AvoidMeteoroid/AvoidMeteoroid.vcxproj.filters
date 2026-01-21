@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\AsteroidGame">
+      <UniqueIdentifier>{a6a2b324-73fd-40ea-aa06-254576114b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\AsteroidGame">
+      <UniqueIdentifier>{ab78bc02-6535-4cfd-93a5-263cad617515}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -45,25 +51,28 @@
     <ClInclude Include="MoveComponent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Asteroid.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Ship.h">
+    <ClInclude Include="CircleCollisionComponent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CircleComponent.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Laser.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Asteroid.h">
+      <Filter>헤더 파일\AsteroidGame</Filter>
     </ClInclude>
     <ClInclude Include="AsteroidGame.h">
+      <Filter>헤더 파일\AsteroidGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>헤더 파일\AsteroidGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser.h">
+      <Filter>헤더 파일\AsteroidGame</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollisionComponent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,25 +110,28 @@
     <ClCompile Include="MoveComponent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Asteroid.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Ship.cpp">
+    <ClCompile Include="CircleCollisionComponent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CircleComponent.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Laser.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Asteroid.cpp">
+      <Filter>소스 파일\AsteroidGame</Filter>
     </ClCompile>
     <ClCompile Include="AsteroidGame.cpp">
+      <Filter>소스 파일\AsteroidGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Laser.cpp">
+      <Filter>소스 파일\AsteroidGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>소스 파일\AsteroidGame</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollisionComponent.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

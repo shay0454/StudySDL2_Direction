@@ -2,6 +2,7 @@
 #include"Ship.h"
 #include"Asteroid.h"
 #include<algorithm>
+
 AsteroidGame::AsteroidGame(){}
 
 void AsteroidGame::OnActorCreated(Actor* actor) {
@@ -42,7 +43,7 @@ void AsteroidGame::LoadData() {
 	mShip->SetRotation(Math::PiOver2);
 
 	for (int i = 0; i < 20; i++) {
-		Game::SpawnActor<Asteroid>();
+		SpawnActor<Asteroid>();
 	}
 }
 

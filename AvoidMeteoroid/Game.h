@@ -70,7 +70,7 @@ private:
 	SDL_Window* mWindow; // 창
 	SDL_Renderer* mRenderer; // 랜더러
 
-	TTF_Font* mFont; // 폰트
+	class TTF_Font* mFont; // 폰트
 
 	unordered_map<string, SDL_Texture*> mTextures; //텍스처 집합체
 	// 형태

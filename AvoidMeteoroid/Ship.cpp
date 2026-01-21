@@ -3,7 +3,8 @@
 #include"SpriteComponent.h"
 #include"InputComponent.h"
 #include"TextComponent.h"
-#include"CircleComponent.h"
+#include"CircleCollisionComponent.h"
+#include"BoxCollisionComponent.h"
 #include"AsteroidGame.h"
 #include"Math.h"
 #include"Laser.h"
@@ -21,8 +22,9 @@ Ship::Ship(Game* game):Actor(game) {
 	mInput->SetMaxForwardSpeed(10.f);
 	mInput->SetMaxAngularSpeed(Math::Pi/6);
 
-	mCircle = new CircleComponent(this);
+	CircleCollisionComponent *mCircle = new CircleCollisionComponent(this);
 	mCircle->SetRadius(32.0f);
+	SetCollision(mCircle);
 
 	mText = new TextComponent(this);
 }
@@ -33,13 +35,6 @@ void Ship::UpdateActor(float deltaTime) {
 	if (IsDead()) { 
 		mRespawnTimer -= deltaTime;
 		return; }
-	auto myGame = dynamic_cast<AsteroidGame*>(GetGame());
-	for (auto ast :myGame->GetAsteroids()) {
-		if (Intersect(*mCircle, *(ast->GetCircle()))){
-			Die();
-			break;
-		}
-	}
 }
 
 void Ship::ActorInput(const uint8_t* keyState) {
@@ -54,12 +49,21 @@ void Ship::ActorInput(const uint8_t* keyState) {
 
 void Ship::Die() {
 	mDead = true;
+	GetGame()->RemoveCollider(GetCollision());
 	mInput->SetActive(false);
 	SetRespawnTimer(3.0f);
 }
 
 void Ship::Respawn() {
 	mDead = false;
+	GetGame()->AddCollider(GetCollision());
 	mInput->SetActive(true);
 	SetRespawnTimer(0.0f);
+}
+
+void Ship::OnCollision(Actor* other) {
+	if (GetState() == EDead)return;
+	if (dynamic_cast<Asteroid*>(other)) {
+		Die();
+	}
 }

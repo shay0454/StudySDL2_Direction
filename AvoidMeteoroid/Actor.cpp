@@ -7,6 +7,10 @@ Actor::Actor(Game* game) :mState(EActive), mPosition(Vector2(0, 0)), mScale(1.0f
 }
 
 Actor::~Actor() {
+	if (mCollision) {
+		GetGame()->RemoveCollider(mCollision);
+		mCollision = nullptr;
+	}
 }
 
 //업데이트

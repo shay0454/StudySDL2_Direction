@@ -8,11 +8,9 @@ class Asteroid : public Actor {
 		Asteroid(class Game* game);
 		~Asteroid();
 		void UpdateActor(float deltaTime) override;
-
-		class CircleComponent* GetCircle(){ return mCircle; }
+		void OnCollision(Actor* other)override;
 
 	private:
-		class CircleComponent* mCircle;
 };
 
 #endif // !ASTEROID_H

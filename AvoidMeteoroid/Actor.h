@@ -42,7 +42,8 @@ public:
 
 	class Game* GetGame() const { return mGame; }
 
-
+	void SetCollision(class CollisionComponent* collision) { mCollision = collision; }
+	class CollisionComponent* GetCollision() const  { return mCollision; }
 
 private:
 	State mState;
@@ -51,6 +52,7 @@ private:
 	float mRotation;
 	vector<class Component*> mComponents;
 	class Game* mGame;
+	class CollisionComponent* mCollision;
 };
 
 #endif // !ACTOR_H

@@ -9,6 +9,8 @@ class Ship : public  Actor {
 		void UpdateActor(float deltaTime) override;
 		void ActorInput(const uint8_t* keyState) override;
 
+		void OnCollision(Actor* other) override;
+
 		bool IsDead() { return mDead; }
 
 		void Die();
@@ -21,7 +23,6 @@ class Ship : public  Actor {
 		bool mDead = false;
 		float mRespawnTimer;
 		float mLaserCooldown;
-		class CircleComponent* mCircle;
 		class InputComponent* mInput;
 		class TextComponent* mText;
 };

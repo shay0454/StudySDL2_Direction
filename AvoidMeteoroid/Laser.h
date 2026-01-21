@@ -5,9 +5,8 @@ public:
 	Laser(class Game* game);
 
 	void UpdateActor(float deltaTime) override;
-
+	void OnCollision(Actor* other)override;
 private:
-	class CircleComponent* mCircle;
-	class SpriteComponent* sc;
 	float mDeathTimer;
+	class SpriteComponent* mSprite;
 };

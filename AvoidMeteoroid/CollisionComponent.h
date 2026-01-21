@@ -7,11 +7,11 @@ class CollisionComponent : public Component {
 		CollisionComponent(class Actor* owner);
 		~CollisionComponent();
 
-		void SetSize(float w, float h) { mWidth = w, mHeight = h; }
-		bool Intersect(const CollisionComponent* other) const;
-		
-	private:
-		float mWidth;
-		float mHeight;
+
+		virtual bool Intersects(const CollisionComponent& other) const = 0;
+
+		virtual bool IntersectsCircle(const class CircleCollisionComponent& other)const = 0;
+		virtual bool IntersectsBox(const class BoxCollisionComponent& other)const = 0;
+
 };
 #endif // !COLLISIONCOMPONENT_H

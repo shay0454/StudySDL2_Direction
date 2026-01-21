@@ -158,9 +158,14 @@ void Game::CheckCollision() {
 		for (size_t j = i + 1; j < mColliders.size(); ++j) {
 			CollisionComponent* c1 = mColliders[i];
 			CollisionComponent* c2 = mColliders[j];
-			if (c1->Intersect(c2)) {
-				c1->GetOwner()->OnCollision(c2->GetOwner());
-				c2->GetOwner()->OnCollision(c1->GetOwner());
+
+			Actor* a1 = c1->GetOwner();
+			Actor* a2 = c2->GetOwner();
+			if (!a1 || a1->GetState() == Actor::EDead)continue;
+			if (!a2 || a2->GetState() == Actor::EDead)continue;
+			if (c1->Intersects(*c2)) {
+				a1->OnCollision(a2);
+				a2->OnCollision(a1);
 			}
 		}
 	}
